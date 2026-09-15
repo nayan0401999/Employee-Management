@@ -21,18 +21,18 @@ public class LeaveRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "start_date")
+    @Column(name = "start_date" , nullable = false)
     private LocalDate startDate;
 
-    @Column(name = "end_date")
+    @Column(name = "end_date" , nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "status")
+    @Column(name = "status" , nullable = false)
     private LeaveStatus status;
 
     @ManyToOne
-    @JoinColumn (name = "employee_id")
-    private Employee employeeId;
+    @JoinColumn (name = "employee_id" , nullable = false)
+    private Employee employee;
 
     public LeaveRequest() {
     }
@@ -72,12 +72,12 @@ public class LeaveRequest {
         this.status = status;
     }
     
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
 }

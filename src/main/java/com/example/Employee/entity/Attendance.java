@@ -21,21 +21,21 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "date")
+    @Column(name = "date" , nullable = false)
     private LocalDate date;
     
-    @Column(name = "entry_time")
+    @Column(name = "entry_time" , nullable = false)
     private LocalTime entryTime;
     
-    @Column(name = "exit_time")
+    @Column(name = "exit_time" , nullable = false)
     private LocalTime exitTime;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status" , nullable = false )
     private AttendanceStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id") 
+    @JoinColumn(name = "employee_id" , nullable = false) 
     private Employee employee;
 
     public Attendance() {

@@ -5,19 +5,19 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "employees")
+@Table(name = "employee")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "designation")
+    @Column(name = "designation", nullable = false, length = 100)
     private String designation;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -27,7 +27,7 @@ public class Employee {
     private List<Attendance> attendances;
 
     @ManyToMany
-    @JoinTable(name = "employee_projects", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+    @JoinTable(name = "employee_project", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
     private List<Project> projects;
 
     public Employee() {
@@ -66,7 +66,6 @@ public class Employee {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public List<LeaveRequest> getLeaveRequests() {
         return leaveRequests;

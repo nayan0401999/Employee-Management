@@ -2,9 +2,11 @@ package com.example.Employee.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import com.example.Employee.enums.AttendanceStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,17 +30,18 @@ public class Attendance {
     @Column(name = "exit_time")
     private LocalTime exitTime;
     
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private AttendanceStatus status;
 
     @ManyToOne
     @JoinColumn(name = "employee_id") 
-    private Employee employeeId;
+    private Employee employee;
 
     public Attendance() {
     }
 
-    public Attendance(Long id, LocalDate date, String status) {
+    public Attendance(Long id, LocalDate date, AttendanceStatus status) {
         this.id = id;
         this.date = date;
         this.status = status;
@@ -60,11 +63,11 @@ public class Attendance {
         this.date = date;
     }
 
-    public String getStatus() {
+    public AttendanceStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AttendanceStatus status) {
         this.status = status;
     }
 
@@ -84,11 +87,11 @@ public class Attendance {
         this.exitTime = exitTime;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
     
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

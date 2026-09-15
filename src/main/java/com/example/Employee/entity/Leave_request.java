@@ -2,6 +2,8 @@ package com.example.Employee.entity;
 
 import java.time.LocalDate;
 
+import com.example.Employee.enums.LeaveStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +28,7 @@ public class Leave_request {
     private LocalDate endDate;
 
     @Column(name = "status")
-    private Boolean status;
+    private LeaveStatus status;
 
     @ManyToOne
     @JoinColumn (name = "employee_id")
@@ -35,7 +37,7 @@ public class Leave_request {
     public Leave_request() {
     }
 
-    public Leave_request(Long id, LocalDate startDate, LocalDate endDate, Boolean status) {
+    public Leave_request(Long id, LocalDate startDate, LocalDate endDate, LeaveStatus status) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -66,11 +68,11 @@ public class Leave_request {
         this.endDate = endDate;
     }
 
-    public Boolean getStatus() {
+    public LeaveStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(LeaveStatus status) {
         this.status = status;
     }
     

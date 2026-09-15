@@ -7,6 +7,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,28 +22,27 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "date" , nullable = false)
+    @Column(name = "date", nullable = false)
     private LocalDate date;
-    
-    @Column(name = "entry_time" , nullable = false)
+
+    @Column(name = "entry_time", nullable = false)
     private LocalTime entryTime;
-    
-    @Column(name = "exit_time" , nullable = false)
+
+    @Column(name = "exit_time", nullable = false)
     private LocalTime exitTime;
-    
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "status" , nullable = false )
+    @Column(name = "status", nullable = false)
     private AttendanceStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id" , nullable = false) 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
     public Attendance() {
     }
 
-    public Attendance(Long id, LocalDate date, AttendanceStatus status) {
-        this.id = id;
+    public Attendance(LocalDate date, AttendanceStatus status) {
         this.date = date;
         this.status = status;
     }
@@ -86,7 +86,7 @@ public class Attendance {
     public Employee getEmployee() {
         return employee;
     }
-    
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }

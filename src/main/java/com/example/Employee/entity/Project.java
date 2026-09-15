@@ -18,7 +18,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name" , nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToMany(mappedBy = "projects")
@@ -27,8 +27,7 @@ public class Project {
     public Project() {
     }
 
-    public Project(Long id, String name) {
-        this.id = id;
+    public Project(String name) {
         this.name = name;
     }
 

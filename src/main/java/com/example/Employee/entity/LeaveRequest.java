@@ -6,6 +6,9 @@ import com.example.Employee.enums.LeaveStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,24 +24,25 @@ public class LeaveRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "start_date" , nullable = false)
+    @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
-    @Column(name = "end_date" , nullable = false)
+    @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "status" , nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private LeaveStatus status;
 
-    @ManyToOne
-    @JoinColumn (name = "employee_id" , nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
     public LeaveRequest() {
     }
 
-    public LeaveRequest(Long id, LocalDate startDate, LocalDate endDate, LeaveStatus status) {
-        this.id = id;
+    public LeaveRequest(LocalDate startDate, LocalDate endDate, LeaveStatus status) {
+
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -71,7 +75,7 @@ public class LeaveRequest {
     public void setStatus(LeaveStatus status) {
         this.status = status;
     }
-    
+
     public Employee getEmployee() {
         return employee;
     }

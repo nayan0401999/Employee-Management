@@ -21,7 +21,7 @@ public class Employee {
     private String email;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Leave_request> leaveRequests;
+    private List<LeaveRequest> leaveRequests;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attendance> attendances;
@@ -68,11 +68,11 @@ public class Employee {
     }
 
 
-    public List<Leave_request> getLeaveRequests() {
+    public List<LeaveRequest> getLeaveRequests() {
         return leaveRequests;
     }
 
-    public void setLeaveRequests(List<Leave_request> leaveRequests) {
+    public void setLeaveRequests(List<LeaveRequest> leaveRequests) {
         this.leaveRequests = leaveRequests;
     }
 

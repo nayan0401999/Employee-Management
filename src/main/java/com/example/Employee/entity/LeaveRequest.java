@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "leave_request")
-public class Leave_request {
+public class LeaveRequest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +34,10 @@ public class Leave_request {
     @JoinColumn (name = "employee_id")
     private Employee employeeId;
 
-    public Leave_request() {
+    public LeaveRequest() {
     }
 
-    public Leave_request(Long id, LocalDate startDate, LocalDate endDate, LeaveStatus status) {
+    public LeaveRequest(Long id, LocalDate startDate, LocalDate endDate, LeaveStatus status) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -46,10 +46,6 @@ public class Leave_request {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public LocalDate getStartDate() {

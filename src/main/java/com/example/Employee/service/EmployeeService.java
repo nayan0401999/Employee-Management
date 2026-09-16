@@ -49,7 +49,7 @@ public class EmployeeService {
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getAllEmployees() {
         List<EmployeeResponseDto> employees = employeeRepository.findAll().stream()
-                .map(this::toResponseDto)
+                .map(employee -> this.toResponseDto(employee))
                 .collect(Collectors.toList());
         return buildResponse(HttpStatus.OK, "Employees fetched successfully", employees);
     }

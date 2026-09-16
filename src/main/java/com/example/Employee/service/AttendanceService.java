@@ -70,7 +70,8 @@ public class AttendanceService {
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getAttendanceById(Long id) {
-        return buildResponse(HttpStatus.OK, "Attendance fetched successfully", toResponseDto(findAttendanceOrThrow(id)));
+        return buildResponse(HttpStatus.OK, "Attendance fetched successfully",
+                toResponseDto(findAttendanceOrThrow(id)));
     }
 
     @Transactional(readOnly = true)
@@ -79,8 +80,9 @@ public class AttendanceService {
             throw new ResourceNotFoundException("Employee not found with id: " + employeeId);
         }
         List<AttendanceResponseDto> list = attendanceRepository.findByEmployeeId(employeeId).stream()
-                .map(this::toResponseDto)
+                .map(attendance -> this.toResponseDto(attendance))
                 .collect(Collectors.toList());
+
         return buildResponse(HttpStatus.OK, "Attendance records fetched successfully", list);
     }
 

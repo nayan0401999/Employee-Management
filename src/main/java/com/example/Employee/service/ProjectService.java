@@ -60,7 +60,7 @@ public class ProjectService {
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getAllProjects() {
         List<ProjectResponseDto> list = projectRepository.findAll().stream()
-                .map(this::toResponseDto)
+                .map(project -> this.toResponseDto(project))
                 .collect(Collectors.toList());
         return buildResponse(HttpStatus.OK, "Projects fetched successfully", list);
     }

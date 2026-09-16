@@ -67,7 +67,7 @@ public class LeaveRequestService {
             throw new ResourceNotFoundException("Employee not found with id: " + employeeId);
         }
         List<LeaveRequestResponseDto> list = leaveRequestRepository.findByEmployeeId(employeeId).stream()
-                .map(this::toResponseDto)
+                .map(leaveRequest -> this.toResponseDto(leaveRequest))
                 .collect(Collectors.toList());
         return buildResponse(HttpStatus.OK, "Leave requests fetched successfully", list);
     }

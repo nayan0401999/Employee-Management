@@ -1,43 +1,45 @@
 package com.example.Employee.controller;
 
-import com.example.Employee.entity.Employee;
-import com.example.Employee.service.EmployeeService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.example.Employee.dto.request.CreateEmployeeDto;
+import com.example.Employee.service.EmployeeService;
+
+import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/api/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
-    @GetMapping
-    public List<Employee> getEmployees() {
-        return employeeService.findAll();
-    }
-
-    @GetMapping({"/{id}"})
-    public Employee getEmployeeById(@PathVariable Long id) {
-        return employeeService.findById(id);
-    }
-
     @PostMapping
-    public Employee addEmployee(@RequestBody Employee employee) {
-        return employeeService.create(employee);
+    public ResponseEntity<Object> create(@Valid @RequestBody CreateEmployeeDto dto) {
+        return employeeService.createEmployee(dto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getById(@PathVariable Long id) {
+        return employeeService.getEmployeeById(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getAll() {
+        return employeeService.getAllEmployees();
     }
 
     @DeleteMapping("/{id}")
-    public String deleteEmployee(@PathVariable Long id) {
-         employeeService.deleteById(id);
-        return "Employee deleted successfully";
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        return employeeService.deleteEmployee(id);
     }
 
-    @PutMapping("/{id}")
-    public Employee updateEmployee(@PathVariable Long id , @RequestBody  Employee employee) {
-        return employeeService.update(id , employee);
+    @GetMapping("/multi-project-attendance")
+    public ResponseEntity<Object> getMultiProjectEmployeesAverageAttendance() {
+        return employeeService.getMultiProjectEmployeesAverageAttendance();
     }
 }

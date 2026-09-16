@@ -50,4 +50,19 @@ public class Project {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Project))
+            return false;
+        Project Project = (Project) o;
+        return id != null && id.equals(Project.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

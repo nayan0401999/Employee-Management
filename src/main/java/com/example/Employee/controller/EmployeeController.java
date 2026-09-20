@@ -33,11 +33,6 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-        return employeeService.deleteEmployee(id);
-    }
-
     @GetMapping("/multi-project-attendance")
     public ResponseEntity<Object> getMultiProjectEmployeesAverageAttendance() {
         return employeeService.getMultiProjectEmployeesAverageAttendance();

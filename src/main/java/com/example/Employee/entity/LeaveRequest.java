@@ -31,7 +31,7 @@ public class LeaveRequest {
     private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private LeaveStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,11 +41,12 @@ public class LeaveRequest {
     public LeaveRequest() {
     }
 
-    public LeaveRequest(LocalDate startDate, LocalDate endDate, LeaveStatus status) {
+    public LeaveRequest(LocalDate startDate, LocalDate endDate, LeaveStatus status , Employee employee) {
 
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.employee = employee;
     }
 
     public Long getId() {

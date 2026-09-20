@@ -23,6 +23,7 @@ public class LeaveRequestController {
 
     @PostMapping
     public ResponseEntity<Object> create(@Valid @RequestBody CreateLeaveRequestDto dto) {
+
         return leaveRequestService.createLeaveRequest(dto);
     }
 

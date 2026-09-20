@@ -47,9 +47,4 @@ public class ProjectController {
     public ResponseEntity<Object> getProjectFullDetails(@PathVariable Long projectId) {
         return projectService.getProjectFullDetails(projectId);
     }
-
-    @DeleteMapping
-    public ResponseEntity<Object> deleteAllProjects() {
-        return projectService.deleteAllProjects();
-    }
 }

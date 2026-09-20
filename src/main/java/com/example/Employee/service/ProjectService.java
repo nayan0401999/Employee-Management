@@ -1,9 +1,7 @@
 package com.example.Employee.service;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -21,6 +19,7 @@ import com.example.Employee.entity.Project;
 import com.example.Employee.exception.ResourceNotFoundException;
 import com.example.Employee.repository.EmployeeRepository;
 import com.example.Employee.repository.ProjectRepository;
+import com.example.Employee.util.ResponseUtil;
 
 @Service
 public class ProjectService {
@@ -36,12 +35,15 @@ public class ProjectService {
     @Transactional
     public ResponseEntity<Object> createProject(CreateProjectDto dto) {
         Project saved = projectRepository.save(toEntity(dto));
-        return buildResponse(HttpStatus.CREATED, "Project created successfully", toResponseDto(saved));
+        return ResponseUtil.build(HttpStatus.CREATED, "Project created successfully", toResponseDto(saved));
     }
 
     @Transactional
     public ResponseEntity<Object> assignEmployee(Long projectId, Long employeeId) {
-        Project project = findProjectOrThrow(projectId);
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + projectId));
+
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + employeeId));
 
@@ -49,12 +51,14 @@ public class ProjectService {
             employee.getProjects().add(project);
             project.getEmployees().add(employee);
         }
-        return buildResponse(HttpStatus.OK, "Employee assigned to project successfully", toResponseDto(project));
+        return ResponseUtil.build(HttpStatus.OK, "Employee assigned to project successfully", toResponseDto(project));
     }
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getProjectById(Long id) {
-        return buildResponse(HttpStatus.OK, "Project fetched successfully", toResponseDto(findProjectOrThrow(id)));
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + id));
+        return ResponseUtil.build(HttpStatus.OK, "Project fetched successfully", toResponseDto(project));
     }
 
     @Transactional(readOnly = true)
@@ -62,23 +66,30 @@ public class ProjectService {
         List<ProjectResponseDto> list = projectRepository.findAll().stream()
                 .map(project -> this.toResponseDto(project))
                 .collect(Collectors.toList());
-        return buildResponse(HttpStatus.OK, "Projects fetched successfully", list);
+        return ResponseUtil.build(HttpStatus.OK, "Projects fetched successfully", list);
     }
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getProjectEmployeesBrief(Long projectId) {
-        Project project = findProjectOrThrow(projectId);
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + projectId));
+
         List<EmployeeBriefDto> brief = project.getEmployees() == null
                 ? Collections.emptyList()
                 : project.getEmployees().stream()
                         .map(e -> new EmployeeBriefDto(e.getName(), e.getDesignation()))
                         .collect(Collectors.toList());
-        return buildResponse(HttpStatus.OK, "Project employees fetched successfully", brief);
+
+        return ResponseUtil.build(HttpStatus.OK, "Project employees fetched successfully", brief);
     }
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getProjectFullDetails(Long projectId) {
-        Project project = findProjectOrThrow(projectId);
+
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + projectId));
+
         List<EmployeeResponseDto> employees = project.getEmployees() == null
                 ? Collections.emptyList()
                 : project.getEmployees().stream()
@@ -87,18 +98,7 @@ public class ProjectService {
 
         ProjectFullDetailsDto details = new ProjectFullDetailsDto(
                 project.getId(), project.getName(), employees.size(), employees);
-        return buildResponse(HttpStatus.OK, "Project full details fetched successfully", details);
-    }
-
-    @Transactional
-    public ResponseEntity<Object> deleteAllProjects() {
-        projectRepository.deleteAll();
-        return buildResponse(HttpStatus.OK, "All projects deleted successfully", null);
-    }
-
-    private Project findProjectOrThrow(Long id) {
-        return projectRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Project not found with id: " + id));
+        return ResponseUtil.build(HttpStatus.OK, "Project full details fetched successfully", details);
     }
 
     private Project toEntity(CreateProjectDto dto) {
@@ -108,15 +108,8 @@ public class ProjectService {
     private ProjectResponseDto toResponseDto(Project project) {
         List<String> employeeNames = project.getEmployees() == null
                 ? Collections.emptyList()
-                : project.getEmployees().stream().map(Employee::getName).collect(Collectors.toList());
+                : project.getEmployees().stream().map(employee -> employee.getName()).collect(Collectors.toList());
         return new ProjectResponseDto(project.getId(), project.getName(), employeeNames);
     }
 
-    private ResponseEntity<Object> buildResponse(HttpStatus status, String message, Object data) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("code", status.value());
-        body.put("message", message);
-        body.put("data", data);
-        return ResponseEntity.status(status).body(body);
-    }
 }

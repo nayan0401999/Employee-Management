@@ -18,7 +18,6 @@ public class CreateLeaveRequestDto {
     @NotNull(message = "Employee id is required")
     private Long employeeId;
 
-    @NotNull (message = "Status is required")
     private LeaveStatus status;
 
     public CreateLeaveRequestDto() {

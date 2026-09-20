@@ -1,8 +1,5 @@
 package com.example.Employee.service;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +9,7 @@ import com.example.Employee.repository.AttendanceRepository;
 import com.example.Employee.repository.EmployeeRepository;
 import com.example.Employee.repository.LeaveRequestRepository;
 import com.example.Employee.repository.ProjectRepository;
+import com.example.Employee.util.ResponseUtil;
 
 @Service
 public class AdminService {
@@ -40,14 +38,8 @@ public class AdminService {
         employeeRepository.deleteAll();
         projectRepository.deleteAll();
 
-        return buildResponse(HttpStatus.OK, "All data deleted successfully", null);
+        return ResponseUtil.build(HttpStatus.OK, "All data deleted successfully", null);
     }
 
-    private ResponseEntity<Object> buildResponse(HttpStatus status, String message, Object data) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("code", status.value());
-        body.put("message", message);
-        body.put("data", data);
-        return ResponseEntity.status(status).body(body);
-    }
+    
 }

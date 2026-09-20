@@ -1,9 +1,7 @@
 package com.example.Employee.service;
 
 import java.time.Duration;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -20,6 +18,7 @@ import com.example.Employee.exception.DuplicateEmailException;
 import com.example.Employee.exception.ResourceNotFoundException;
 import com.example.Employee.repository.AttendanceRepository;
 import com.example.Employee.repository.EmployeeRepository;
+import com.example.Employee.util.ResponseUtil;
 
 @Service
 public class EmployeeService {
@@ -38,37 +37,38 @@ public class EmployeeService {
             throw new DuplicateEmailException("Employee with email '" + dto.getEmail() + "' already exists");
         }
         Employee saved = employeeRepository.save(toEntity(dto));
-        return buildResponse(HttpStatus.CREATED, "Employee created successfully", toResponseDto(saved));
+        return ResponseUtil.build(HttpStatus.CREATED, "Employee created successfully", toResponseDto(saved));
     }
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getEmployeeById(Long id) {
-        return buildResponse(HttpStatus.OK, "Employee fetched successfully", toResponseDto(findEmployeeOrThrow(id)));
+        
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
+        
+        return ResponseUtil.build(HttpStatus.OK, "Employee fetched successfully", toResponseDto(employee));
     }
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getAllEmployees() {
+        
         List<EmployeeResponseDto> employees = employeeRepository.findAll().stream()
                 .map(employee -> this.toResponseDto(employee))
                 .collect(Collectors.toList());
-        return buildResponse(HttpStatus.OK, "Employees fetched successfully", employees);
-    }
 
-    @Transactional
-    public ResponseEntity<Object> deleteEmployee(Long id) {
-        employeeRepository.delete(findEmployeeOrThrow(id));
-        return buildResponse(HttpStatus.OK, "Employee deleted successfully", null);
+        return ResponseUtil.build(HttpStatus.OK, "Employees fetched successfully", employees);
     }
 
     @Transactional(readOnly = true)
     public ResponseEntity<Object> getMultiProjectEmployeesAverageAttendance() {
+        
         List<Employee> employees = employeeRepository.findEmployeesWithMultipleProjects();
 
         List<EmployeeAverageAttendanceDto> result = employees.stream()
                 .map(e -> new EmployeeAverageAttendanceDto(e.getName(), calculateAverageHoursWorked(e.getId())))
                 .collect(Collectors.toList());
 
-        return buildResponse(HttpStatus.OK, "Multi-project employees fetched successfully", result);
+        return ResponseUtil.build(HttpStatus.OK, "Multi-project employees fetched successfully", result);
     }
 
     private double calculateAverageHoursWorked(Long employeeId) {
@@ -83,11 +83,7 @@ public class EmployeeService {
         return Math.round(average * 100.0) / 100.0; // round to 2 decimal places
     }
 
-    private Employee findEmployeeOrThrow(Long id) {
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
-    }
-
+   
     private Employee toEntity(CreateEmployeeDto dto) {
         return new Employee(dto.getName(), dto.getDesignation(), dto.getEmail());
     }
@@ -97,11 +93,5 @@ public class EmployeeService {
                 employee.getId(), employee.getName(), employee.getDesignation(), employee.getEmail());
     }
 
-    private ResponseEntity<Object> buildResponse(HttpStatus status, String message, Object data) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("code", status.value());
-        body.put("message", message);
-        body.put("data", data);
-        return ResponseEntity.status(status).body(body);
-    }
+    
 }

@@ -15,7 +15,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter 
+@Setter
+@NoArgsConstructor  
 @Entity
 @Table(name = "leave_request")
 public class LeaveRequest {
@@ -38,8 +44,6 @@ public class LeaveRequest {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    public LeaveRequest() {
-    }
 
     public LeaveRequest(LocalDate startDate, LocalDate endDate, LeaveStatus status , Employee employee) {
 
@@ -49,40 +53,5 @@ public class LeaveRequest {
         this.employee = employee;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public LeaveStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(LeaveStatus status) {
-        this.status = status;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
 
 }

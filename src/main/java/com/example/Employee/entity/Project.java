@@ -9,7 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter 
+@Getter 
+@NoArgsConstructor 
 @Entity
 @Table(name = "project")
 public class Project {
@@ -24,32 +30,12 @@ public class Project {
     @ManyToMany(mappedBy = "projects")
     private List<Employee> employees;
 
-    public Project() {
-    }
 
     public Project(String name) {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
+   
 
     @Override
     public boolean equals(Object o) {

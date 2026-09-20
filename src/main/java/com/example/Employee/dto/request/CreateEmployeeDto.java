@@ -3,7 +3,13 @@ package com.example.Employee.dto.request;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter 
+@Setter 
+@NoArgsConstructor 
 public class CreateEmployeeDto {
 
     @NotBlank(message = "Name is required")
@@ -19,30 +25,4 @@ public class CreateEmployeeDto {
     @Size(max = 100, message = "Email must not exceed 100 characters")
     private String email;
 
-    public CreateEmployeeDto() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDesignation() {
-        return designation;
-    }
-
-    public void setDesignation(String designation) {
-        this.designation = designation;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

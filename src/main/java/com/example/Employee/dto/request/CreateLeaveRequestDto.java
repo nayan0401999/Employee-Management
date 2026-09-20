@@ -6,7 +6,13 @@ import com.example.Employee.enums.LeaveStatus;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter 
+@Setter 
+@NoArgsConstructor 
 public class CreateLeaveRequestDto {
 
     @NotNull(message = "Start date is required")
@@ -20,8 +26,6 @@ public class CreateLeaveRequestDto {
 
     private LeaveStatus status;
 
-    public CreateLeaveRequestDto() {
-    }
 
     @AssertTrue(message = "End date must not be before start date")
     private boolean isEndDateValid() {
@@ -30,38 +34,5 @@ public class CreateLeaveRequestDto {
         }
         return !endDate.isBefore(startDate);
     }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public LeaveStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(LeaveStatus status) {
-        this.status = status;
-    }
-
 
 }

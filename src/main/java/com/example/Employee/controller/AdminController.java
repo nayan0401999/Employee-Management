@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Employee.service.AdminService;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 @RestController
 @RequestMapping("/api/admin")
@@ -21,4 +23,11 @@ public class AdminController {
     public ResponseEntity<Object> deleteAllData() {
         return adminService.deleteAllData();
     }
+
+    @GetMapping
+    public ResponseEntity<Object> getMethodName() {
+
+        return adminService.getMethodName();
+    }
+    
 }

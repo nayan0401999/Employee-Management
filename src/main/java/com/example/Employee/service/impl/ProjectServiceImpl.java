@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.Employee.dao.EmployeeRepository;
+import com.example.Employee.dao.ProjectRepository;
 import com.example.Employee.dto.request.CreateProjectDto;
 import com.example.Employee.dto.response.EmployeeBriefDto;
 import com.example.Employee.dto.response.EmployeeResponseDto;
@@ -17,8 +19,6 @@ import com.example.Employee.dto.response.ProjectResponseDto;
 import com.example.Employee.entity.Employee;
 import com.example.Employee.entity.Project;
 import com.example.Employee.exception.ResourceNotFoundException;
-import com.example.Employee.repository.EmployeeRepository;
-import com.example.Employee.repository.ProjectRepository;
 import com.example.Employee.service.ProjectService;
 import com.example.Employee.util.ResponseUtil;
 

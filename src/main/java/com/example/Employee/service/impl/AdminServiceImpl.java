@@ -8,10 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.core.env.Environment;
-import com.example.Employee.repository.AttendanceRepository;
-import com.example.Employee.repository.EmployeeRepository;
-import com.example.Employee.repository.LeaveRequestRepository;
-import com.example.Employee.repository.ProjectRepository;
+
+import com.example.Employee.dao.AttendanceRepository;
+import com.example.Employee.dao.EmployeeRepository;
+import com.example.Employee.dao.LeaveRequestRepository;
+import com.example.Employee.dao.ProjectRepository;
 import com.example.Employee.service.AdminService;
 import com.example.Employee.util.ResponseUtil;
 

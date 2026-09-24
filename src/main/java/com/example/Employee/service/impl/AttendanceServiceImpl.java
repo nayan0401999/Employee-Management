@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.Employee.dao.AttendanceRepository;
+import com.example.Employee.dao.EmployeeRepository;
 import com.example.Employee.dto.request.CheckOutDto;
 import com.example.Employee.dto.request.CreateAttendanceDto;
 import com.example.Employee.dto.response.AttendanceResponseDto;
@@ -15,8 +17,6 @@ import com.example.Employee.entity.Employee;
 import com.example.Employee.enums.AttendanceStatus;
 import com.example.Employee.exception.InvalidAttendanceException;
 import com.example.Employee.exception.ResourceNotFoundException;
-import com.example.Employee.repository.AttendanceRepository;
-import com.example.Employee.repository.EmployeeRepository;
 import com.example.Employee.service.AttendanceService;
 import com.example.Employee.util.ResponseUtil;
 

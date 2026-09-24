@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.Employee.dao.AttendanceRepository;
+import com.example.Employee.dao.EmployeeRepository;
 import com.example.Employee.dto.request.CreateEmployeeDto;
 import com.example.Employee.dto.response.EmployeeAverageAttendanceDto;
 import com.example.Employee.dto.response.EmployeeResponseDto;
@@ -16,8 +18,6 @@ import com.example.Employee.entity.Attendance;
 import com.example.Employee.entity.Employee;
 import com.example.Employee.exception.DuplicateEmailException;
 import com.example.Employee.exception.ResourceNotFoundException;
-import com.example.Employee.repository.AttendanceRepository;
-import com.example.Employee.repository.EmployeeRepository;
 import com.example.Employee.service.EmployeeService;
 import com.example.Employee.util.ResponseUtil;
 

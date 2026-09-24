@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.Employee.dao.EmployeeRepository;
+import com.example.Employee.dao.LeaveRequestRepository;
 import com.example.Employee.dto.request.CreateLeaveRequestDto;
 import com.example.Employee.dto.response.LeaveRequestResponseDto;
 import com.example.Employee.entity.Employee;
@@ -16,8 +18,6 @@ import com.example.Employee.entity.LeaveRequest;
 import com.example.Employee.enums.LeaveStatus;
 import com.example.Employee.exception.InvalidLeaveRequestException;
 import com.example.Employee.exception.ResourceNotFoundException;
-import com.example.Employee.repository.EmployeeRepository;
-import com.example.Employee.repository.LeaveRequestRepository;
 import com.example.Employee.service.LeaveRequestService;
 import com.example.Employee.util.ResponseUtil;
 

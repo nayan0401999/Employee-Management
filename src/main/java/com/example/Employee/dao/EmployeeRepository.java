@@ -1,4 +1,4 @@
-package com.example.Employee.repository;
+package com.example.Employee.dao;
 
 import com.example.Employee.entity.Employee;
 

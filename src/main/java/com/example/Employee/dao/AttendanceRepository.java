@@ -1,4 +1,4 @@
-package com.example.Employee.repository;
+package com.example.Employee.dao;
 
 import java.time.LocalDate;
 import java.util.List;
